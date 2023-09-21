@@ -11,13 +11,17 @@ nb_tentative = 12
 
 
 #initialisation des fichiers
-if not (isfile("nb_parti.txt")) or not (isfile("score.txt")):
-    init()
+
+
+
 
 def init ():
     for file in ["nb_parti.txt","score.txt"]:
         with open(file,'w') as f:
             f.write("0")
+
+if not (isfile("nb_parti.txt")) or not (isfile("score.txt")):
+    init()
 
 def show_score(score,nb_parti):
     ratio_text = ""
@@ -34,18 +38,13 @@ def game():
     second = choice(['R','G','B','Y','P','W'])
     third = choice(['R','G','B','Y','P','W'])
     four = choice(['R','G','B','Y','P','W'])
-    five = choice(['R','G','B','Y','P','W'])
-    six = choice(['R','G','B','Y','P','W'])
-    
+
     #initialisation des variables
     first_caract = str()
     second_caract = str()
     third_caract = str()
     four_caract = str()
-    five_caract = str()
-    six_caract = str()
-
-    #rajouter ou enlever un caractére (min :1 max:6)
+  
     solve = (first+second+third+four)
     print (solve)
     
@@ -70,13 +69,15 @@ def game():
     a=0
     while a<nb_tentative: 
         print(f"Mastermind => (R)ed, (G)reen, (B)lue, (Y)ellow, (P)urple et (W)hite")
-        print("La solution sera sous la forme de 4 inconnu ex rypw pour red yellow purple white.\nSi X apparait => la lettre n'est pas bonne.\nSi Y apparait => La lettre n'est pas a la bonne place")
+        print("La solution sera sous la forme de 4 inconnu ex rypw pour red yellow purple white.\nSi X apparait => la lettre n'est pas bonne.\nSi Z apparait => La lettre n'est pas a la bonne place")
         combination = input ("Combinaison couleur :")
         combination = combination.upper ()
         c=0
         if combination == solve :
             print("Victoire")
-            show_score (stat["score"],stat["nb_parti"])
+            a += 1
+            stat["score"] += a
+            stat["nb_parti"] += 1
             stupid = True
             while (stupid):
                 again = input ("Voulez vous rejouer O/N : ")
@@ -92,6 +93,7 @@ def game():
                     for file in ["nb_parti","score"]:
                         with open(file+".txt",'w') as f:
                             f.write (str(stat[file]))
+                    show_score (stat["score"],stat["nb_parti"])
                     exit()
             else:
                 print ("Veuillez entrer O ou N ")
@@ -100,44 +102,44 @@ def game():
                 if letter==first:
                     first_caract=first
                 elif letter==second:
-                    first_caract="Y"
+                    first_caract="Z"
                 elif letter==third:
-                    first_caract="Y"
+                    first_caract="Z"
                 elif letter==four:
-                    first_caract="Y"
+                    first_caract="Z"
                 else:
                     first_caract="X"
             if c==1:
                 if letter==second:
                     second_caract=second
                 elif letter==first:
-                    second_caract='Y'
+                    second_caract='Z'
                 elif letter==third:
-                    second_caract="Y"
+                    second_caract="Z"
                 elif letter==four:
-                    second_caract="Y"
+                    second_caract="Z"
                 else:
                     second_caract="X"
             if c==2:
                 if letter==third:
                     third_caract=third
                 elif letter==first:
-                    third_caract="Y"
+                    third_caract="Z"
                 elif letter==second:
-                    third_caract="Y"    
+                    third_caract="Z"    
                 elif letter==four:
-                    third_caract="Y"
+                    third_caract="Z"
                 else:
                     third_caract="X"
             if c==3:
                 if letter==four:
                     four_caract=four
                 elif letter==first:
-                    third_caract="Y"
+                    third_caract="Z"
                 elif letter==second:
-                    third_caract="Y"
+                    third_caract="Z"
                 elif letter==third:
-                    third_caract="Y"
+                    third_caract="Z"
                 else:
                     four_caract="X"
             
@@ -145,7 +147,7 @@ def game():
                 
         else:
             a += 1
-        print(f"{first_caract}{second_caract}{third_caract}{four_caract}{five_caract}{six_caract}")
+        print(f"{first_caract}{second_caract}{third_caract}{four_caract}")
         del (combination)
         stat["score"] += a
         stat["nb_parti"] += 1
